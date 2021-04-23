@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     addLike(imageId) {
-      console.log(imageId)
     }
   },
   async created () {
@@ -46,7 +45,6 @@ export default {
     }
     var response = await fetch('http://localhost:8000/images/api/ranking/', requestOptions);
     this.images = await response.json();
-    console.log(this.images)
   }
 }
 </script>

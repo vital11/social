@@ -50,7 +50,7 @@
           class="ml-5"
           max-width="300"
           v-for="person in image.users_like"
-          :key="person"
+          :key="person.username"
           flat
         >
           <v-img
@@ -85,14 +85,17 @@ export default {
   },
   computed: {
     action() {
-      if (this.image.users_like.includes(this.user)) {
+      //   if (this.image.users_like.includes(this.user)) {
+      if (this.image.users_like.some(e => e.username === this.user)) {
         return this.action = 'dislike'
       }
       return this.action = 'like'
-    }
+    },
   },
   created () {
     this.loadImage()
+    this.action()
+    console.log(this.action)
   },
   methods: {
     async loadImage () {
@@ -111,9 +114,7 @@ export default {
       this.loadImage()
     },
   },
-  components: {
-    LikeImageButton
-  }
+  components: { LikeImageButton }
 }
 </script>
 

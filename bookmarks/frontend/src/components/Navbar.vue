@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar app flat color="green">
-    <v-toolbar-title class="title">
+  <v-app-bar app flat dark color="green">
+    <v-toolbar-title class="title mr-15">
       <router-link to="/" class="link"><span>Social network</span></router-link>
     </v-toolbar-title>
     <v-btn text>
@@ -46,20 +46,8 @@
 
 
 <style>
-	.menu-item{
-		color: white;
-	}
-	.link{
-		text-decoration: none;
-	}
 	.link span{
 		text-decoration: none;
 		color:white;
-	}
-	.link .login{
-		color: blue;
-	}
-	.title{
-		margin-right: 100px;
 	}
 </style>
