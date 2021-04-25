@@ -168,9 +168,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-
-/bookmarks/frontend/.editorconfig
 /.idea/
 
-/bookmarks/static/
 /bookmarks/bookmarks/local_settings.py
