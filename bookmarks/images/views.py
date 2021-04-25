@@ -2,36 +2,37 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from rest_framework import status
+from django.http import HttpResponse
+from django.views.decorators.http import require_POST
+from django.conf import settings
+
 from rest_framework.decorators import api_view
+from rest_framework import status
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from account.models import Profile
 from sub.permissions import allowed_users, IsAuthenticatedAndSubscriber
 from .forms import ImageCreateForm
 from .models import Image
-from django.http import JsonResponse, HttpResponse
-from django.views.decorators.http import require_POST
 
 from common.decorators import ajax_required
 from actions.utils import create_action
 
 import redis
-from django.conf import settings
-import stripe
 
 from .serializers import ImageSerializer, ImageCreateSerializer, ImageRankingSerializer, ImageLikeSerializer
+
+import logging
+# logger = logging.getLogger('django.request')
+logger = logging.getLogger(__name__)  # images
+
 
 r = redis.StrictRedis(host=settings.REDIS_HOST,
                       port=settings.REDIS_PORT,
                       db=settings.REDIS_DB)
-
-
-stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
 
 class ImageViewSet(ModelViewSet):
@@ -56,6 +57,7 @@ class ImageRankingView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        logger.warning('Enter in to the Image ranking endpoint')
         # Получаем набор рейтинга картинок.
         image_ranking = r.zrange('image_ranking', 0, -1, desc=True)[:10]
         image_ranking_ids = [int(id) for id in image_ranking]
@@ -98,6 +100,7 @@ class ImageLikeView(APIView):
                         image.users_like.remove(user)
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
                 except:
+                    logger.exception(f'Exception, action = {action}')
                     pass
         return Response(serializer.data, status=status.HTTP_200_OK)
 

@@ -21,8 +21,8 @@
 
     <v-spacer></v-spacer>
 
-    <div v-if="user">
-      <span style="color:yellow">Hello, {{ user }}</span>
+    <div v-if="getUser">
+      <span style="color:yellow">Hello, {{ getUser }}</span>
       <router-link :to = "{ name:'logout' }" class="link ml-5"><span>Logout</span></router-link>
     </div>
     <div v-else>
@@ -34,12 +34,21 @@
 
 
 <script>
+import { mapGetters } from 'vuex'
+
+
   export default {
     name: "Navbar",
-    data() {
-    	return {
-    		user: localStorage.getItem('user')
-    	}
+    // data() {
+    // 	return {
+    // 		user: localStorage.getItem('user'),
+    // 	}
+    // }
+    computed: {
+      ...mapGetters(['getUser']),
+      // user() {
+      //   return this.$store.getters.getUser
+      // }
     }
 }
 </script>

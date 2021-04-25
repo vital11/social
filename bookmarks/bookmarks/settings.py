@@ -203,3 +203,60 @@ STRIPE_PLAN_BASIC_ID = config('STRIPE_PLAN_BASIC_ID')
 STRIPE_PLAN_PREMIUM_ID = config('STRIPE_PLAN_PREMIUM_ID')
 STRIPE_BACKEND_URL = 'http://127.0.0.1:8000'
 STRIPE_FRONTEND_URL = 'http://127.0.0.1:8080'
+
+
+# ADMINS = (
+#     ('admin', 'admin@admin.com'),
+# )
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{asctime}] {levelname} logger:{name} line:{lineno} "{message}"',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'WARNING',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': './log/warning.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'WARNING'),
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['mail_admins', 'console'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'images': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': True,
+        }
+    }
+}
+
+

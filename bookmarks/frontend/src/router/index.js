@@ -78,7 +78,7 @@ const routes = [
   {
     path: '*',
     redirect: {name: 'dashboard'}
-  },  
+  },
 ]
 
 const router = new VueRouter({

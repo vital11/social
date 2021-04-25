@@ -81,13 +81,12 @@ export default {
   data() {
     return {
       id: parseInt(this.$route.params.id),
-      person: localStorage.getItem('user'),
       user: {},
     }
   },
   computed: {
     action() {
-      if (this.user.followers.includes(this.person)) {
+      if (this.user.followers.includes(this.$store.getters.getUser)) {
         return this.action = 'unfollow'
       }
       return this.action = 'follow'

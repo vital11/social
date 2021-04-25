@@ -94,8 +94,6 @@ export default {
   },
   created () {
     this.loadImage()
-    this.action()
-    console.log(this.action)
   },
   methods: {
     async loadImage () {

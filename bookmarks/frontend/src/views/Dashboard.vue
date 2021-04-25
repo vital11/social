@@ -3,7 +3,7 @@
 
     <div class="pa-3">
       <h1 class="mb-5">Dashboard</h1>
-      <p>Welcome to your dashboard, <strong>{{ person }}</strong>. You can edit your profile or 
+      <p>Welcome to your dashboard, <strong>{{ $store.state.user }}</strong>. You can edit your profile or 
         <router-link :to = "{ name:'change-password' }">change your password</router-link>.</p>
       <p>For now, you have bookmarked 2 images.</p>
       <p>Drag the following button to your bookmarks toolbar to bookmark images from other websites Bookmark it</p>
@@ -81,7 +81,7 @@ export default {
   name: 'Dashboard',
   data() {
     return {
-      person: localStorage.getItem('user'),
+      // person: localStorage.getItem('user'),
       apiUrl: 'http://127.0.0.1:8000',
       actions: [],
     }
