@@ -173,3 +173,4 @@ pnpm-debug.log*
 /.idea/
 
 /bookmarks/static/
+/bookmarks/bookmarks/local_settings.py

@@ -10,12 +10,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&xl7%)@^69lx%xc&o78=qm)ks_0g_ryy$!im(3ls=+ws*+jtqm'
+# SECRET_KEY = '&xl7%)@^69lx%xc&o78=qm)ks_0g_ryy$!im(3ls=+ws*+jtqm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True   # Celery doesn't working when DEBUG = True
+# DEBUG = True   # Celery doesn't working when DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'c987f400d36d.ngrok.io', 'localhost']
+# ALLOWED_HOSTS = ['127.0.0.1', 'c987f400d36d.ngrok.io', 'localhost']
 
 
 INSTALLED_APPS = [
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'images.apps.ImagesConfig',
     'actions.apps.ActionsConfig',
     'sub.apps.SubConfig',
+    'start',
 ]
 
 MIDDLEWARE = [
@@ -69,16 +70,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bookmarks.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -112,17 +113,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
-
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -131,11 +129,9 @@ ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username])
 }
 
-
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -187,14 +183,12 @@ CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_SERIALIZER = 'json'
 
-
 # SendGrid
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-
 
 STRIPE_TEST_PUBLISHABLE_KEY = config('STRIPE_TEST_PUBLISHABLE_KEY')
 STRIPE_TEST_SECRET_KEY = config('STRIPE_TEST_SECRET_KEY')
@@ -203,7 +197,6 @@ STRIPE_PLAN_BASIC_ID = config('STRIPE_PLAN_BASIC_ID')
 STRIPE_PLAN_PREMIUM_ID = config('STRIPE_PLAN_PREMIUM_ID')
 STRIPE_BACKEND_URL = 'http://127.0.0.1:8000'
 STRIPE_FRONTEND_URL = 'http://127.0.0.1:8080'
-
 
 # ADMINS = (
 #     ('admin', 'admin@admin.com'),
@@ -260,3 +253,7 @@ LOGGING = {
 }
 
 
+try:
+    from .local_settings import *
+except ImportError:
+    from .prod_settings import *

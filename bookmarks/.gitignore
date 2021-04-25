@@ -171,3 +171,4 @@ pnpm-debug.log*
 
 /.idea/
 
+/bookmarks/prod_settings.py
