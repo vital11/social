@@ -175,6 +175,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8081",
     "http://127.0.0.1:8080",
     "http://127.0.0.1:8080",
+    "http://178.62.228.163",
 ]
 
 CELERY_TASK_TRACK_STARTED = True

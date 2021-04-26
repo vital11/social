@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
   	alertMessage: '',
-    apiUrl: 'http://127.0.0.1:8000',
+    // apiUrl: 'http://127.0.0.1:8000',
+    apiUrl: 'http://178.62.228.163:81',
     user: localStorage.getItem('user'),
   },
   mutations: {
@@ -16,10 +17,10 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
-    getApiUrl: state => {
+    apiUrl: state => {
       return state.apiUrl
     },
-    getUser(state) {
+    user(state) {
       return state.user
     }
   }

@@ -6,6 +6,7 @@
 
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'LikeButton',
@@ -17,6 +18,7 @@ export default {
     'like-image': null
   },
   computed: {
+    ...mapGetters(['apiUrl']),
     color() {
       return this.action === 'like' ? 'grey' : 'orange'
     }
@@ -35,7 +37,7 @@ export default {
           'action': this.action
         }),
       };
-      await fetch('http://localhost:8000/images/api/like/', requestOptions);
+      await fetch(`${this.apiUrl}/images/api/like/`, requestOptions);
       this.$emit('like-image')
     },
   }

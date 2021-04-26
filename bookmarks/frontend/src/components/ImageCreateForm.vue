@@ -37,6 +37,7 @@
 
 <script>
 import AppAlert from '../components/AppAlert.vue';
+import { mapGetters } from 'vuex'
 
 export default {
   name: "ImageCreateForm",
@@ -54,6 +55,9 @@ export default {
       alert: null
     }
   },
+  computed: {
+    ...mapGetters(['apiUrl']),
+  },
   methods: {
     async createImage() {
       if (this.formIsValid()) {
@@ -66,7 +70,7 @@ export default {
           },
           body: JSON.stringify(this.image)
         };
-        await fetch("http://127.0.0.1:8000/images/api/create-image/", requestOptions);
+        await fetch(`${this.apiUrl}/images/api/create-image/`, requestOptions);
         this.$emit('create-image');
         this.image = {}
         this.alert = {

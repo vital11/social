@@ -3,7 +3,7 @@
 
     <div class="pa-3">
       <h1 class="mb-5">Dashboard</h1>
-      <p>Welcome to your dashboard, <strong>{{ $store.state.user }}</strong>. You can edit your profile or 
+      <p>Welcome to your dashboard, <strong>{{ user }}</strong>. You can edit your profile or 
         <router-link :to = "{ name:'change-password' }">change your password</router-link>.</p>
       <p>For now, you have bookmarked 2 images.</p>
       <p>Drag the following button to your bookmarks toolbar to bookmark images from other websites Bookmark it</p>
@@ -76,15 +76,17 @@
 
 <script>
 import Subscription from '../components/Subscription.vue';
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Dashboard',
   data() {
     return {
-      // person: localStorage.getItem('user'),
-      apiUrl: 'http://127.0.0.1:8000',
       actions: [],
     }
+  },
+  computed: {
+    ...mapGetters(['user', 'apiUrl']),
   },
   methods: {
     async loadActions() {
@@ -96,7 +98,7 @@ export default {
           "Authorization": "JWT " + token,
         },
       }
-      var response = await fetch('http://127.0.0.1:8000/api/dashboard/', requestOptions);
+      var response = await fetch(`${this.apiUrl}/api/dashboard/`, requestOptions);
       this.actions = await response.json();
     },
   },

@@ -20,6 +20,7 @@
 
 <script>
 import ImageCard from "@/components/ImageCard";
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ImageRanking',
@@ -27,9 +28,11 @@ export default {
   data() {
     return {
       images: [],
-      apiUrl: 'http://127.0.0.1:8000'
     }
   },
+  computed: {
+    ...mapGetters(['apiUrl']),
+  },  
   methods: {
     addLike(imageId) {
     }
@@ -43,7 +46,7 @@ export default {
         "Authorization": "JWT " + token,
       },
     }
-    var response = await fetch('http://localhost:8000/images/api/ranking/', requestOptions);
+    var response = await fetch(`${this.apiUrl}/images/api/ranking/`, requestOptions);
     this.images = await response.json();
   }
 }

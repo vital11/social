@@ -20,6 +20,7 @@
 
 <script>
 import UserCard from '../components/UserCard.vue';
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'UserList',
@@ -28,6 +29,9 @@ export default {
       users: [],
     }
   },
+  computed: {
+    ...mapGetters(['apiUrl']),
+  },  
   methods: {
     async loadUsers () {
       let token = localStorage.getItem('token');
@@ -38,7 +42,7 @@ export default {
           "Authorization": "JWT " + token,
         },
       }
-      var response = await fetch('http://127.0.0.1:8000/api/', requestOptions);
+      var response = await fetch(`${this.apiUrl}/api/`, requestOptions);
       this.users = await response.json();
     },
   },

@@ -18,6 +18,7 @@
 
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Subscription',
@@ -25,11 +26,14 @@ export default {
     return {
     }
   },
+  computed: {
+    ...mapGetters(['apiUrl']),
+  },  
   methods: {
     async createCheckoutSession() {
       var stripe = Stripe("pk_test_51IXqAwIBBCpvms2A0tZdmSSd78uaVKdZ86iOhZrbKAxO4uf41sgvHWyp6q71h11shWh0ZNFR1BLZBnzmgzSKWd8a00T1RT6ZMQ");
       let token = localStorage.getItem('token');
-      await fetch("http://localhost:8000/sub/api/create-checkout-session/", {
+      await fetch(`${this.apiUrl}/sub/api/create-checkout-session/`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +57,7 @@ export default {
     },
     async createCustomerPortalSession() {
       let token = localStorage.getItem('token');
-      await fetch("http://localhost:8000/sub/api/create-customer-portal-session/", {
+      await fetch(`${this.apiUrl}/sub/api/create-customer-portal-session/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

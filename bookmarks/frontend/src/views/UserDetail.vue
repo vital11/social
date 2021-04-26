@@ -75,6 +75,7 @@
 
 <script>
 import UserCard from '../components/UserCard.vue';
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'UserDetail',
@@ -86,14 +87,15 @@ export default {
   },
   computed: {
     action() {
-      if (this.user.followers.includes(this.$store.getters.getUser)) {
+      if (this.user.followers.includes(this.$store.getters.user)) {
         return this.action = 'unfollow'
       }
       return this.action = 'follow'
     },
     color() {
       return this.action === 'follow' ? 'grey' : 'orange'
-    }
+    },
+    ...mapGetters(['apiUrl']),
   },  
   created () {
     this.loadUser()
@@ -108,7 +110,7 @@ export default {
           "Authorization": "JWT " + token,
         }
       };
-      var response = await fetch('http://localhost:8000/api/' + this.id, requestOptions);
+      var response = await fetch(`${this.apiUrl}/api/${this.id}/`, requestOptions);
       this.user = await response.json();
     },
     async followUser() {
@@ -124,7 +126,7 @@ export default {
           'action': this.action
         }),        
       };
-      await fetch('http://localhost:8000/api/users/follow/', requestOptions);
+      await fetch(`${this.apiUrl}/api/users/follow/`, requestOptions);
       this.loadUser()
     },
 

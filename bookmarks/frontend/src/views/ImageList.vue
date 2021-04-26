@@ -54,6 +54,7 @@
 import ImageCard from '../components/ImageCard.vue';
 import ImageCreateForm from '../components/ImageCreateForm.vue';
 import AppAlert from '../components/AppAlert.vue';
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ImageList',
@@ -64,6 +65,9 @@ export default {
       alert: null,
     }
   },
+  computed: {
+    ...mapGetters(['user', 'apiUrl']),
+  },  
   methods: {
     async loadImages () {
       let token = localStorage.getItem('token');
@@ -74,7 +78,7 @@ export default {
           "Authorization": "JWT " + token,
         },
       }
-      var response = await fetch('http://localhost:8000/images/api/', requestOptions);
+      var response = await fetch(`${this.apiUrl}/images/api/`, requestOptions);
       this.images = await response.json();
     },
     async deleteImage(id) {
@@ -88,7 +92,7 @@ export default {
             "Authorization": "JWT " + token,
           }
         };
-        await fetch(`http://localhost:8000/images/api/${id}`, requestOptions);
+        await fetch(`${this.apiUrl}/images/api/${id}`, requestOptions);
         this.images = this.images.filter(image => image.id !== id)
         this.alert = {
           color: 'red',

@@ -24,6 +24,7 @@
 
 
 <script>
+import { mapGetters } from 'vuex'
 
   export default {
     name: "Notifications",
@@ -35,6 +36,9 @@
         }
       }
     },
+    computed: {
+    ...mapGetters(['apiUrl']),
+    },  
     methods: {
       async sendMailToAllUsers() {
         let token = localStorage.getItem('token');
@@ -46,7 +50,7 @@
           },
           body: JSON.stringify(this.mail)
         }
-        var response = await fetch("http://127.0.0.1:8000/api/send/", requestOptions);
+        var response = await fetch(`${this.apiUrl}/api/send/`, requestOptions);
         this.mail.push(await response.json());
       }
     }

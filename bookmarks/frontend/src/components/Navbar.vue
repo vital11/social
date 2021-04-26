@@ -21,8 +21,8 @@
 
     <v-spacer></v-spacer>
 
-    <div v-if="getUser">
-      <span style="color:yellow">Hello, {{ getUser }}</span>
+    <div v-if="user">
+      <span style="color:yellow">Hello, {{ user }}</span>
       <router-link :to = "{ name:'logout' }" class="link ml-5"><span>Logout</span></router-link>
     </div>
     <div v-else>
@@ -45,7 +45,7 @@ import { mapGetters } from 'vuex'
     // 	}
     // }
     computed: {
-      ...mapGetters(['getUser']),
+      ...mapGetters(['user']),
       // user() {
       //   return this.$store.getters.getUser
       // }

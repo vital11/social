@@ -54,7 +54,7 @@
           flat
         >
           <v-img
-            :src="'http://127.0.0.1:8000' + person.profile.photo"
+            :src="apiUrl + person.profile.photo"
             aspect-ratio="1"
             class="grey lighten-2 rounded-circle"
             width="100px"
@@ -72,18 +72,18 @@
 
 <script>
 import LikeImageButton from '../components/LikeImageButton.vue';
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ImageDetail',
   data() {
     return {
       id: parseInt(this.$route.params.id),
-      user: localStorage.getItem('user'),
-      apiUrl: 'http://127.0.0.1:8000',
       image: {},
     }
   },
   computed: {
+    ...mapGetters(['user', 'apiUrl']),
     action() {
       //   if (this.image.users_like.includes(this.user)) {
       if (this.image.users_like.some(e => e.username === this.user)) {
@@ -105,7 +105,8 @@ export default {
           "Authorization": "JWT " + token,
         }
       };
-      var response = await fetch('http://localhost:8000/images/api/' + this.id, requestOptions);
+      // var response = await fetch('http://localhost:8000/images/api/' + this.id, requestOptions);
+      var response = await fetch(`${this.apiUrl}/images/api/${this.id}/`, requestOptions);
       this.image = await response.json();
     },
     likeImage() {
