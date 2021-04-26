@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'images.apps.ImagesConfig',
     'actions.apps.ActionsConfig',
     'sub.apps.SubConfig',
-    'start',
 ]
 
 MIDDLEWARE = [

@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default{
 	name: 'Login',
 	data(){
@@ -47,6 +49,9 @@ export default{
 		    ]
 		}
 	},
+  computed: {
+    ...mapGetters(['apiUrl']),
+  },
 	created(){
 		setTimeout(function(){
 			this.$store.state.alertMessage = '';
@@ -62,7 +67,8 @@ export default{
 				body: JSON.stringify(this.user)
 			}
 
-			let response = await fetch('http://localhost:8000/api/auth/', requestOptions);
+			// let response = await fetch('http://localhost:8000/api/auth/', requestOptions);
+			let response = await fetch(`${this.apiUrl}/api/auth/`, requestOptions);
 			if(await response.status === 200){
 				this.message = await response.json();
 				localStorage.setItem('token', this.message.token);
